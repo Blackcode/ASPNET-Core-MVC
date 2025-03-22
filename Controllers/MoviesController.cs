@@ -62,21 +62,5 @@ namespace ASPNET_Core_MVC.Controllers
 
             return View(movie);
         }
-
-        // GET: Movies/Genre/Action
-        public async Task<IActionResult> Genre(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                return RedirectToAction(nameof(Index));
-            }
-
-            var movies = await _context.Movies
-                .Where(m => m.Genre == id)
-                .ToListAsync();
-
-            ViewData["GenreName"] = id;
-            return View(movies);
-        }
     }
 }

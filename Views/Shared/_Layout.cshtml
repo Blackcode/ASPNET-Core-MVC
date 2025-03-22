@@ -28,20 +28,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-controller="TvSeries" asp-action="Index">TV Series</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Genres
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-controller="Movies" asp-action="Genre" asp-route-id="Action">Action</a>
-                                <a class="dropdown-item" asp-controller="Movies" asp-action="Genre" asp-route-id="Comedy">Comedy</a>
-                                <a class="dropdown-item" asp-controller="Movies" asp-action="Genre" asp-route-id="Drama">Drama</a>
-                                <a class="dropdown-item" asp-controller="Movies" asp-action="Genre" asp-route-id="Horror">Horror</a>
-                                <a class="dropdown-item" asp-controller="Movies" asp-action="Genre" asp-route-id="Romance">Romance</a>
-                                <a class="dropdown-item" asp-controller="Movies" asp-action="Genre" asp-route-id="Sci-Fi">Sci-Fi</a>
-                                <a class="dropdown-item" asp-controller="Movies" asp-action="Genre" asp-route-id="Thriller">Thriller</a>
-                            </div>
-                        </li>
+                        <!-- Genres dropdown removed -->
                     </ul>
                     <ul class="navbar-nav">
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
