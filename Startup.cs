@@ -74,9 +74,22 @@ namespace ASPNET_Core_MVC
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            // Add global exception handling
+            app.Use(async (context, next) =>
+            {
+                try
+                {
+                    await next();
+                }
+                catch (Exception ex)
+                {
+                    context.Response.StatusCode = 500;
+                    await context.Response.WriteAsync($"An error occurred: {ex.Message}");
+                }
+            });
             
             // Enable response compression
             app.UseResponseCompression();
