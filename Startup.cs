@@ -87,7 +87,8 @@ namespace ASPNET_Core_MVC
                 catch (Exception ex)
                 {
                     context.Response.StatusCode = 500;
-                    await context.Response.WriteAsync($"An error occurred: {ex.Message}");
+                    await context.Response.Body.WriteAsync(
+                        System.Text.Encoding.UTF8.GetBytes($"An error occurred: {ex.Message}"));
                 }
             });
             
