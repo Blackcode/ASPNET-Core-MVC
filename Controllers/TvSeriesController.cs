@@ -22,7 +22,7 @@ namespace ASPNET_Core_MVC.Controllers
         // GET: TvSeries
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TvSeries.AsNoTracking().ToListAsync());
+            return View(await _context.TvSeries.AsNoTracking().OrderBy(t => t.Id).ToListAsync());
         }
 
         // GET: TvSeries/Details/5

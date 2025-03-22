@@ -22,7 +22,7 @@ namespace ASPNET_Core_MVC.Controllers
         public async Task<IActionResult> Index()
         {
             // Add caching if movies don't change frequently
-            return View(await _context.Movies.AsNoTracking().ToListAsync());
+            return View(await _context.Movies.AsNoTracking().OrderBy(m => m.Id).ToListAsync());
         }
 
         // GET: Movies/Details/5
