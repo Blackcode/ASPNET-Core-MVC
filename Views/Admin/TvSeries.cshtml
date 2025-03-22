@@ -1,4 +1,3 @@
-
 @model IEnumerable<ASPNET_Core_MVC.Models.TvSeries>
 
 @{
@@ -8,12 +7,12 @@
 
 <div class="container">
     <h1 class="mt-4 mb-4">TV Series Management</h1>
-    
+
     <p>
         <a asp-action="CreateTvSeries" class="btn btn-primary">Create New TV Series</a>
         <a asp-action="Index" class="btn btn-secondary">Manage Movies</a>
     </p>
-    
+
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -41,6 +40,7 @@
                             <div class="btn-group">
                                 <a asp-action="EditTvSeries" asp-route-id="@item.Id" class="btn btn-sm btn-info">Edit</a>
                                 <a asp-action="DeleteTvSeries" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                                <a asp-action="Episodes" asp-route-id="@item.Id" class="btn btn-info btn-sm">Manage Episodes</a>
                             </div>
                         </td>
                     </tr>

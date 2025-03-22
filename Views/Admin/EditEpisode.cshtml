@@ -1,0 +1,69 @@
+
+@model ASPNET_Core_MVC.Models.Episode
+
+@{
+    ViewData["Title"] = "Edit Episode";
+}
+
+<div class="container">
+    <h1 class="mt-4 mb-4">Edit Episode</h1>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="EditEpisode">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="TvSeriesId" />
+                <input type="hidden" asp-for="DateAdded" />
+                
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="SeasonNumber" class="control-label">Season Number</label>
+                        <input asp-for="SeasonNumber" class="form-control" />
+                        <span asp-validation-for="SeasonNumber" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-group col-md-6">
+                        <label asp-for="EpisodeNumber" class="control-label">Episode Number</label>
+                        <input asp-for="EpisodeNumber" class="form-control" />
+                        <span asp-validation-for="EpisodeNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="VideoUrl" class="control-label">Video URL</label>
+                    <input asp-for="VideoUrl" class="form-control" />
+                    <span asp-validation-for="VideoUrl" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label asp-for="Duration" class="control-label">Duration (minutes)</label>
+                    <input asp-for="Duration" class="form-control" />
+                    <span asp-validation-for="Duration" class="text-danger"></span>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a asp-action="Episodes" asp-route-id="@Model.TvSeriesId" class="btn btn-secondary">Back to Episodes</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

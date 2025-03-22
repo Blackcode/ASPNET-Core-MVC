@@ -223,6 +223,143 @@ namespace ASPNET_Core_MVC.Controllers
             var tvSeries = await _context.TvSeries
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tvSeries == null)
+
+        // Episode Management
+        // GET: Admin/Episodes/5 (TV Series ID)
+        public async Task<IActionResult> Episodes(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tvSeries = await _context.TvSeries
+                .Include(t => t.Episodes.OrderBy(e => e.SeasonNumber).ThenBy(e => e.EpisodeNumber))
+                .FirstOrDefaultAsync(m => m.Id == id.Value);
+
+            if (tvSeries == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.TvSeriesId = id;
+            ViewBag.TvSeriesTitle = tvSeries.Title;
+            
+            return View(tvSeries.Episodes.ToList());
+        }
+
+        // GET: Admin/CreateEpisode/5 (TV Series ID)
+        public IActionResult CreateEpisode(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.TvSeriesId = id;
+            return View();
+        }
+
+        // POST: Admin/CreateEpisode
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateEpisode([Bind("Title,Description,SeasonNumber,EpisodeNumber,VideoUrl,Duration,TvSeriesId")] Episode episode)
+        {
+            if (ModelState.IsValid)
+            {
+                episode.DateAdded = DateTime.Now;
+                _context.Add(episode);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Episodes), new { id = episode.TvSeriesId });
+            }
+            return View(episode);
+        }
+
+        // GET: Admin/EditEpisode/5
+        public async Task<IActionResult> EditEpisode(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var episode = await _context.Episodes.FindAsync(id);
+            if (episode == null)
+            {
+                return NotFound();
+            }
+            return View(episode);
+        }
+
+        // POST: Admin/EditEpisode/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditEpisode(int id, [Bind("Id,Title,Description,SeasonNumber,EpisodeNumber,VideoUrl,Duration,TvSeriesId,DateAdded")] Episode episode)
+        {
+            if (id != episode.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(episode);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EpisodeExists(episode.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Episodes), new { id = episode.TvSeriesId });
+            }
+            return View(episode);
+        }
+
+        // GET: Admin/DeleteEpisode/5
+        public async Task<IActionResult> DeleteEpisode(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var episode = await _context.Episodes
+                .Include(e => e.TvSeries)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (episode == null)
+            {
+                return NotFound();
+            }
+
+            return View(episode);
+        }
+
+        // POST: Admin/DeleteEpisode/5
+        [HttpPost, ActionName("DeleteEpisode")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteEpisodeConfirmed(int id)
+        {
+            var episode = await _context.Episodes.FindAsync(id);
+            int tvSeriesId = episode.TvSeriesId;
+            _context.Episodes.Remove(episode);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Episodes), new { id = tvSeriesId });
+        }
+
+        private bool EpisodeExists(int id)
+        {
+            return _context.Episodes.Any(e => e.Id == id);
+        }
+
             {
                 return NotFound();
             }

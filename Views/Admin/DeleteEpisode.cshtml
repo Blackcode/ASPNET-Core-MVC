@@ -1,0 +1,45 @@
+
+@model ASPNET_Core_MVC.Models.Episode
+
+@{
+    ViewData["Title"] = "Delete Episode";
+}
+
+<div class="container">
+    <h1 class="mt-4 mb-4">Delete Episode</h1>
+    
+    <div class="alert alert-danger">
+        <h3>Are you sure you want to delete this episode?</h3>
+        <p>This action cannot be undone.</p>
+    </div>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <dl class="row">
+                <dt class="col-sm-3">TV Series</dt>
+                <dd class="col-sm-9">@Model.TvSeries.Title</dd>
+                
+                <dt class="col-sm-3">Season/Episode</dt>
+                <dd class="col-sm-9">S@(Model.SeasonNumber)E@(Model.EpisodeNumber)</dd>
+                
+                <dt class="col-sm-3">Title</dt>
+                <dd class="col-sm-9">@Model.Title</dd>
+                
+                <dt class="col-sm-3">Description</dt>
+                <dd class="col-sm-9">@Model.Description</dd>
+                
+                <dt class="col-sm-3">Duration</dt>
+                <dd class="col-sm-9">@Model.Duration min</dd>
+                
+                <dt class="col-sm-3">Date Added</dt>
+                <dd class="col-sm-9">@Model.DateAdded.ToShortDateString()</dd>
+            </dl>
+            
+            <form asp-action="DeleteEpisode">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Delete" class="btn btn-danger" />
+                <a asp-action="Episodes" asp-route-id="@Model.TvSeriesId" class="btn btn-secondary">Back to Episodes</a>
+            </form>
+        </div>
+    </div>
+</div>
