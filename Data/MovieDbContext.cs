@@ -13,6 +13,8 @@ namespace ASPNET_Core_MVC.Data
 
         public DbSet<Movie> Movies { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<TvSeries> TvSeries { get; set; }
+        public DbSet<Episode> Episodes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -51,6 +53,70 @@ namespace ASPNET_Core_MVC.Data
                     ReleaseYear = 2020,
                     ImageUrl = "https://via.placeholder.com/300x450/1a237e/ffffff?text=Movie+2",
                     VideoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+                }
+            );
+            
+            // Seed sample TV Series
+            modelBuilder.Entity<TvSeries>().HasData(
+                new TvSeries
+                {
+                    Id = 1,
+                    Title = "Sample TV Series 1",
+                    Description = "This is a sample TV series description.",
+                    Creator = "Creator Name",
+                    Genre = "Drama",
+                    StartYear = 2020,
+                    EndYear = null, // Still ongoing
+                    ImageUrl = "https://via.placeholder.com/300x450/2e7d32/ffffff?text=TV+Series+1",
+                    IsFeatured = true
+                },
+                new TvSeries
+                {
+                    Id = 2,
+                    Title = "Sample TV Series 2",
+                    Description = "Another sample TV series description.",
+                    Creator = "Another Creator",
+                    Genre = "Sci-Fi",
+                    StartYear = 2018,
+                    EndYear = 2022,
+                    ImageUrl = "https://via.placeholder.com/300x450/c62828/ffffff?text=TV+Series+2"
+                }
+            );
+            
+            // Seed sample Episodes
+            modelBuilder.Entity<Episode>().HasData(
+                new Episode
+                {
+                    Id = 1,
+                    Title = "Pilot",
+                    Description = "The first episode of the series.",
+                    SeasonNumber = 1,
+                    EpisodeNumber = 1,
+                    VideoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                    Duration = 45,
+                    TvSeriesId = 1
+                },
+                new Episode
+                {
+                    Id = 2,
+                    Title = "The Journey Begins",
+                    Description = "The second episode of the series.",
+                    SeasonNumber = 1,
+                    EpisodeNumber = 2,
+                    VideoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+                    Duration = 42,
+                    TvSeriesId = 1
+                },
+                new Episode
+                {
+                    Id = 3,
+                    Title = "New Beginnings",
+                    Description = "The first episode of the second TV series.",
+                    SeasonNumber = 1,
+                    EpisodeNumber = 1,
+                    VideoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+                    Duration = 48,
+                    TvSeriesId = 2
                 }
             );
         }

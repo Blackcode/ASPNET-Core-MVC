@@ -24,16 +24,34 @@ namespace ASPNET_Core_MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            // Retrieve both featured and recent movies in a single query to improve efficiency
-            var movies = await _context.Movies.ToListAsync();
-            
-            // Process the data in memory
-            var featuredMovies = movies.Where(m => m.IsFeatured).ToList();
-            var recentMovies = movies.OrderByDescending(m => m.DateAdded).Take(6).ToList();
+            var featuredMovies = await _context.Movies
+                .Where(m => m.IsFeatured)
+                .Take(6)
+                .AsNoTracking()
+                .ToListAsync();
 
-            // Use a view model instead of ViewData for better type safety
+            var recentMovies = await _context.Movies
+                .OrderByDescending(m => m.DateAdded)
+                .Take(6)
+                .AsNoTracking()
+                .ToListAsync();
+
+            var featuredTvSeries = await _context.TvSeries
+                .Where(t => t.IsFeatured)
+                .Take(6)
+                .AsNoTracking()
+                .ToListAsync();
+
+            var recentTvSeries = await _context.TvSeries
+                .OrderByDescending(t => t.DateAdded)
+                .Take(6)
+                .AsNoTracking()
+                .ToListAsync();
+
             ViewData["FeaturedMovies"] = featuredMovies;
             ViewData["RecentMovies"] = recentMovies;
+            ViewData["FeaturedTvSeries"] = featuredTvSeries;
+            ViewData["RecentTvSeries"] = recentTvSeries;
 
             return View();
         }

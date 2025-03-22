@@ -1,4 +1,3 @@
-
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -8,7 +7,7 @@
         <div class="row align-items-center">
             <div class="col-md-8">
                 <h1>Welcome to Movie Streaming</h1>
-                <p class="lead">Watch the latest movies online anytime, anywhere.</p>
+                <p class="lead">Watch the latest movies and TV series online anytime, anywhere.</p>
             </div>
             <div class="col-md-4 d-none d-md-block text-right">
                 <i class="fa fa-film fa-5x"></i>
@@ -40,6 +39,28 @@
         </div>
     }
 
+    @if (ViewBag.FeaturedTvSeries != null && ViewBag.FeaturedTvSeries.Count > 0)
+    {
+        <div class="featured-movies">
+            <h2>Featured TV Series</h2>
+            <div class="row">
+                @foreach (var series in ViewBag.FeaturedTvSeries)
+                {
+                    <div class="col-6 col-md-4 col-lg-3 mb-4">
+                        <div class="card movie-card">
+                            <img src="@series.ImageUrl" class="card-img-top" alt="@series.Title">
+                            <div class="card-body">
+                                <h5 class="card-title">@series.Title</h5>
+                                <p class="card-text small">@series.Genre | @series.StartYear@(series.EndYear.HasValue ? $" - {series.EndYear}" : " - Present")</p>
+                                <a asp-controller="TvSeries" asp-action="Details" asp-route-id="@series.Id" class="btn btn-primary btn-sm">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
     @if (ViewBag.RecentMovies != null && ViewBag.RecentMovies.Count > 0)
     {
         <div class="recent-movies">
@@ -54,6 +75,28 @@
                                 <h5 class="card-title">@movie.Title</h5>
                                 <p class="card-text small">@movie.Genre | @movie.ReleaseYear</p>
                                 <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-primary btn-sm">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    @if (ViewBag.RecentTvSeries != null && ViewBag.RecentTvSeries.Count > 0)
+    {
+        <div class="recent-movies">
+            <h2>Recently Added TV Series</h2>
+            <div class="row">
+                @foreach (var series in ViewBag.RecentTvSeries)
+                {
+                    <div class="col-6 col-md-4 col-lg-3 mb-4">
+                        <div class="card movie-card">
+                            <img src="@series.ImageUrl" class="card-img-top" alt="@series.Title">
+                            <div class="card-body">
+                                <h5 class="card-title">@series.Title</h5>
+                                <p class="card-text small">@series.Genre | @series.StartYear@(series.EndYear.HasValue ? $" - {series.EndYear}" : " - Present")</p>
+                                <a asp-controller="TvSeries" asp-action="Details" asp-route-id="@series.Id" class="btn btn-primary btn-sm">View Details</a>
                             </div>
                         </div>
                     </div>
