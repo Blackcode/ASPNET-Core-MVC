@@ -37,8 +37,8 @@ namespace ASPNET_Core_MVC.Data
                     Director = "Director Name",
                     Genre = "Action",
                     ReleaseYear = 2021,
-                    ImageUrl = "/images/sample1.jpg",
-                    VideoUrl = "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
+                    ImageUrl = "https://via.placeholder.com/300x450/343a40/ffffff?text=Movie+1",
+                    VideoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
                     IsFeatured = true
                 },
                 new Movie
@@ -49,8 +49,8 @@ namespace ASPNET_Core_MVC.Data
                     Director = "Another Director",
                     Genre = "Comedy",
                     ReleaseYear = 2020,
-                    ImageUrl = "/images/sample2.jpg",
-                    VideoUrl = "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"
+                    ImageUrl = "https://via.placeholder.com/300x450/1a237e/ffffff?text=Movie+2",
+                    VideoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
                 }
             );
         }

@@ -85,6 +85,7 @@ body {
   height: 100%;
   transition: transform 0.3s;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  margin-bottom: 1.5rem;
 }
 
 .movie-card:hover {
@@ -92,8 +93,19 @@ body {
 }
 
 .movie-card img {
-  height: 300px;
+  height: 250px;
   object-fit: cover;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .movie-card img {
+    height: 200px;
+  }
+  
+  .hero-section {
+    padding: 2rem 0;
+  }
 }
 
 .featured-movies, .recent-movies {

@@ -2,21 +2,38 @@
 @model ASPNET_Core_MVC.Models.Movie
 
 @{
-    ViewData["Title"] = "Watch - " + Model.Title;
+    ViewData["Title"] = "Watch " + Model.Title;
 }
 
-<div class="watch-page">
+<div class="container watch-page">
     <h1>@Model.Title</h1>
     
     <div class="video-container mb-4">
-        <video controls class="movie-player">
+        <video controls class="movie-player" poster="@Model.ImageUrl">
             <source src="@Model.VideoUrl" type="video/mp4">
             Your browser does not support the video tag.
         </video>
     </div>
     
-    <div class="movie-info">
-        <p class="text-muted">@Model.ReleaseYear | @Model.Genre | Director: @Model.Director</p>
-        <p>@Model.Description</p>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="movie-info">
+                <h3>About this movie</h3>
+                <p><strong>Director:</strong> @Model.Director</p>
+                <p><strong>Genre:</strong> @Model.Genre</p>
+                <p><strong>Release Year:</strong> @Model.ReleaseYear</p>
+                <p>@Model.Description</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h4>More like this</h4>
+                </div>
+                <div class="card-body">
+                    <p>Related content will appear here.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +36,7 @@ namespace ASPNET_Core_MVC.Controllers
             var movie = await _context.Movies
                 .AsNoTracking() // Use AsNoTracking for read-only operations
                 .FirstOrDefaultAsync(m => m.Id == id.Value);
-                
+
             if (movie == null)
             {
                 return NotFound();
