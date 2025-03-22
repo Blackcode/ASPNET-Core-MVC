@@ -223,6 +223,28 @@ namespace ASPNET_Core_MVC.Controllers
             var tvSeries = await _context.TvSeries
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tvSeries == null)
+            {
+                return NotFound();
+            }
+
+            return View(tvSeries);
+        }
+
+        // POST: Admin/DeleteTvSeries/5
+        [HttpPost, ActionName("DeleteTvSeries")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteTvSeriesConfirmed(int id)
+        {
+            var tvSeries = await _context.TvSeries.FindAsync(id);
+            _context.TvSeries.Remove(tvSeries);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(TvSeries));
+        }
+
+        private bool TvSeriesExists(int id)
+        {
+            return _context.TvSeries.Any(e => e.Id == id);
+        }
 
         // Episode Management
         // GET: Admin/Episodes/5 (TV Series ID)
@@ -358,29 +380,6 @@ namespace ASPNET_Core_MVC.Controllers
         private bool EpisodeExists(int id)
         {
             return _context.Episodes.Any(e => e.Id == id);
-        }
-
-            {
-                return NotFound();
-            }
-
-            return View(tvSeries);
-        }
-
-        // POST: Admin/DeleteTvSeries/5
-        [HttpPost, ActionName("DeleteTvSeries")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteTvSeriesConfirmed(int id)
-        {
-            var tvSeries = await _context.TvSeries.FindAsync(id);
-            _context.TvSeries.Remove(tvSeries);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(TvSeries));
-        }
-
-        private bool TvSeriesExists(int id)
-        {
-            return _context.TvSeries.Any(e => e.Id == id);
         }
     }
 }
