@@ -104,7 +104,7 @@ namespace ASPNET_Core_MVC
                         errorMessage = $"<html><body><h1>Server Error</h1><p>An error occurred: {ex.Message}</p><p>Stack trace: {ex.StackTrace}</p></body></html>";
                     }
                     
-                    await context.Response.WriteAsync(errorMessage);
+                    await context.Response.Body.WriteAsync(System.Text.Encoding.UTF8.GetBytes(errorMessage));
                 }
             });
             
