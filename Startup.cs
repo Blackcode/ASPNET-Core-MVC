@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using ASPNET_Core_MVC.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Net.Http.Headers;
 
 namespace ASPNET_Core_MVC
 {
@@ -90,7 +92,7 @@ namespace ASPNET_Core_MVC
                 OnPrepareResponse = ctx =>
                 {
                     // Cache static files for 7 days
-                    ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=604800");
+                    ctx.Context.Response.Headers[HeaderNames.CacheControl] = "public,max-age=604800";
                 }
             });
 
