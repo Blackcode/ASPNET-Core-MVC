@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ASPNET_Core_MVC.Models;
 using Microsoft.EntityFrameworkCore;
+using ASPNET_Core_MVC.Data;
 
 namespace ASPNET_Core_MVC.Controllers
 {
