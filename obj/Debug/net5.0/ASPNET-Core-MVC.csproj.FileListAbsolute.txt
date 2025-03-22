@@ -153,3 +153,7 @@
 /home/runner/workspace/obj/Debug/net5.0/Razor/Views/TvSeries/Details.cshtml.g.cs
 /home/runner/workspace/obj/Debug/net5.0/Razor/Views/TvSeries/Index.cshtml.g.cs
 /home/runner/workspace/obj/Debug/net5.0/Razor/Views/TvSeries/Watch.cshtml.g.cs
+/home/runner/workspace/obj/Debug/net5.0/Razor/Views/Admin/CreateTvSeries.cshtml.g.cs
+/home/runner/workspace/obj/Debug/net5.0/Razor/Views/Admin/DeleteTvSeries.cshtml.g.cs
+/home/runner/workspace/obj/Debug/net5.0/Razor/Views/Admin/EditTvSeries.cshtml.g.cs
+/home/runner/workspace/obj/Debug/net5.0/Razor/Views/Admin/TvSeries.cshtml.g.cs
