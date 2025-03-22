@@ -32,7 +32,7 @@ namespace ASPNET_Core_MVC.Controllers
                 .ToListAsync();
 
             var recentMovies = await _context.Movies
-                .OrderByDescending(m => m.DateAdded.HasValue ? m.DateAdded.Value : DateTime.MinValue)
+                .OrderByDescending(m => m.DateAdded)
                 .Take(6)
                 .AsNoTracking()
                 .ToListAsync();
@@ -45,7 +45,7 @@ namespace ASPNET_Core_MVC.Controllers
                 .ToListAsync();
 
             var recentTvSeries = await _context.TvSeries
-                .OrderByDescending(t => t.DateAdded.HasValue ? t.DateAdded.Value : DateTime.MinValue)
+                .OrderByDescending(t => t.DateAdded)
                 .Take(6)
                 .AsNoTracking()
                 .ToListAsync();
