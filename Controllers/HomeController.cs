@@ -26,6 +26,7 @@ namespace ASPNET_Core_MVC.Controllers
         {
             var featuredMovies = await _context.Movies
                 .Where(m => m.IsFeatured)
+                .OrderBy(m => m.Id)  // Add order by to avoid unpredictable results
                 .Take(6)
                 .AsNoTracking()
                 .ToListAsync();
@@ -38,6 +39,7 @@ namespace ASPNET_Core_MVC.Controllers
 
             var featuredTvSeries = await _context.TvSeries
                 .Where(t => t.IsFeatured)
+                .OrderBy(t => t.Id)  // Add order by to avoid unpredictable results
                 .Take(6)
                 .AsNoTracking()
                 .ToListAsync();
