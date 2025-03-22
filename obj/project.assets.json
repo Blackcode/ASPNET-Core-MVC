@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/runner/ASPNET-Core-MVC/ASPNET-Core-MVC.csproj",
+      "projectUniqueName": "/home/runner/workspace/ASPNET-Core-MVC.csproj",
       "projectName": "ASPNET-Core-MVC",
-      "projectPath": "/home/runner/ASPNET-Core-MVC/ASPNET-Core-MVC.csproj",
+      "projectPath": "/home/runner/workspace/ASPNET-Core-MVC.csproj",
       "packagesPath": "/home/runner/.nuget/packages/",
-      "outputPath": "/home/runner/ASPNET-Core-MVC/obj/",
+      "outputPath": "/home/runner/workspace/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/runner/.nuget/NuGet/NuGet.Config"

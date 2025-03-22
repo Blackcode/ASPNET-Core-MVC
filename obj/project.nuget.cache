@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "E3waHohHDYrsfUcelm0yHentGPO/aZl1iNI8B5XAog3Nn3dj1MojV+meO+ph0PSQKacLtgPTWKd1QMhEdrJLHQ==",
+  "dgSpecHash": "dAbuoBX7dppqSaesSA+0YTS3O6gaOK1yLAmcjmkqkniKYuJlbApHG/bmG+r9FsgXtYzfmVTD7iUnunuqsyX7Sw==",
   "success": true,
-  "projectFilePath": "/home/runner/ASPNET-Core-MVC/ASPNET-Core-MVC.csproj",
+  "projectFilePath": "/home/runner/workspace/ASPNET-Core-MVC.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
