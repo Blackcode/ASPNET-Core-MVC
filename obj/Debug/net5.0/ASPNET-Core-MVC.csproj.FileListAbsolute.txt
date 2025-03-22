@@ -135,7 +135,6 @@
 /home/runner/workspace/obj/Debug/net5.0/Razor/Views/Home/Index.cshtml.g.cs
 /home/runner/workspace/obj/Debug/net5.0/Razor/Views/Home/Privacy.cshtml.g.cs
 /home/runner/workspace/obj/Debug/net5.0/Razor/Views/Movies/Details.cshtml.g.cs
-/home/runner/workspace/obj/Debug/net5.0/Razor/Views/Movies/Genre.cshtml.g.cs
 /home/runner/workspace/obj/Debug/net5.0/Razor/Views/Movies/Index.cshtml.g.cs
 /home/runner/workspace/obj/Debug/net5.0/Razor/Views/Movies/Watch.cshtml.g.cs
 /home/runner/workspace/obj/Debug/net5.0/Razor/Views/Shared/Error.cshtml.g.cs
