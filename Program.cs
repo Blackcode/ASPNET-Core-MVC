@@ -26,52 +26,52 @@ namespace ASPNET_Core_MVC
                 {
                     var context = services.GetRequiredService<MovieDbContext>();
                     
-                    // First ensure the database file exists
+                    // Ensure database exists and is created using EF Core's migration system
                     context.Database.EnsureCreated();
                     
                     try
                     {
-                        // Check if tables exist, if not create them
-                        context.Database.ExecuteSqlRaw(@"
-                            CREATE TABLE IF NOT EXISTS Movies (
-                                Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                Title TEXT NOT NULL,
-                                Description TEXT,
-                                Director TEXT,
-                                Genre TEXT,
-                                ReleaseYear INTEGER NOT NULL,
-                                ImageUrl TEXT,
-                                VideoUrl TEXT,
-                                IsFeatured INTEGER NOT NULL,
-                                DateAdded TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-                            );
-                            
-                            CREATE TABLE IF NOT EXISTS Users (
-                                Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                Username TEXT NOT NULL,
-                                PasswordHash TEXT NOT NULL,
-                                Role TEXT NOT NULL,
-                                DateCreated TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
-                            );
-                        ");
-                        
-                        // Check if data exists to avoid duplication
-                        var userCount = context.Database.ExecuteSqlRaw("SELECT COUNT(*) FROM Users");
-                        if (userCount == 0)
+                        // Check if there are any users, if not, seed the database
+                        if (!context.Users.Any())
                         {
-                            // Insert sample data
-                            context.Database.ExecuteSqlRaw(@"
-                                -- Insert admin user
-                                INSERT INTO Users (Username, PasswordHash, Role)
-                                VALUES ('admin', 'AQAAAAEAACcQAAAAEKXG5dqDuBMy0f+3xLm0ngxkGtGE6ZFZi99Qj1SgCaKkVY6AUGPgUKrm6BdnRZZ13w==', 'Admin');
-                                
-                                -- Insert sample movies
-                                INSERT INTO Movies (Title, Description, Director, Genre, ReleaseYear, ImageUrl, VideoUrl, IsFeatured)
-                                VALUES ('Sample Movie 1', 'This is a sample movie description.', 'Director Name', 'Action', 2021, '/images/sample1.jpg', 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4', 1);
-                                
-                                INSERT INTO Movies (Title, Description, Director, Genre, ReleaseYear, ImageUrl, VideoUrl, IsFeatured)
-                                VALUES ('Sample Movie 2', 'Another sample movie description.', 'Another Director', 'Comedy', 2020, '/images/sample2.jpg', 'https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4', 0);
-                            ");
+                            // Add admin user
+                            context.Users.Add(new Models.User
+                            {
+                                Username = "admin",
+                                PasswordHash = "AQAAAAEAACcQAAAAEKXG5dqDuBMy0f+3xLm0ngxkGtGE6ZFZi99Qj1SgCaKkVY6AUGPgUKrm6BdnRZZ13w==",
+                                Role = "Admin",
+                                DateCreated = DateTime.Now
+                            });
+
+                            // Add sample movies
+                            context.Movies.Add(new Models.Movie
+                            {
+                                Title = "Sample Movie 1",
+                                Description = "This is a sample movie description.",
+                                Director = "Director Name",
+                                Genre = "Action",
+                                ReleaseYear = 2021,
+                                ImageUrl = "/images/sample1.jpg",
+                                VideoUrl = "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
+                                IsFeatured = true,
+                                DateAdded = DateTime.Now
+                            });
+
+                            context.Movies.Add(new Models.Movie
+                            {
+                                Title = "Sample Movie 2",
+                                Description = "Another sample movie description.",
+                                Director = "Another Director",
+                                Genre = "Comedy",
+                                ReleaseYear = 2020,
+                                ImageUrl = "/images/sample2.jpg",
+                                VideoUrl = "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
+                                IsFeatured = false,
+                                DateAdded = DateTime.Now
+                            });
+
+                            // Save changes to the database
+                            context.SaveChanges();
                         }
                     }
                     catch (Exception ex)

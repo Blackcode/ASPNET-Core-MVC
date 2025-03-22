@@ -22,7 +22,8 @@ namespace ASPNET_Core_MVC.Controllers
         // GET: Movies
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Movies.ToListAsync());
+            // Add caching if movies don't change frequently
+            return View(await _context.Movies.AsNoTracking().ToListAsync());
         }
 
         // GET: Movies/Details/5
@@ -34,7 +35,9 @@ namespace ASPNET_Core_MVC.Controllers
             }
 
             var movie = await _context.Movies
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .AsNoTracking() // Use AsNoTracking for read-only operations
+                .FirstOrDefaultAsync(m => m.Id == id.Value);
+                
             if (movie == null)
             {
                 return NotFound();
