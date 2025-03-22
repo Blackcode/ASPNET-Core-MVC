@@ -1,0 +1,51 @@
+
+@model IEnumerable<ASPNET_Core_MVC.Models.TvSeries>
+
+@{
+    ViewData["Title"] = "TV Series Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h1 class="mt-4 mb-4">TV Series Management</h1>
+    
+    <p>
+        <a asp-action="CreateTvSeries" class="btn btn-primary">Create New TV Series</a>
+        <a asp-action="Index" class="btn btn-secondary">Manage Movies</a>
+    </p>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Start Year</th>
+                    <th>End Year</th>
+                    <th>Featured</th>
+                    <th>Date Added</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>@item.Genre</td>
+                        <td>@item.StartYear</td>
+                        <td>@(item.EndYear.HasValue ? item.EndYear.Value.ToString() : "Present")</td>
+                        <td>@(item.IsFeatured ? "Yes" : "No")</td>
+                        <td>@item.DateAdded.ToShortDateString()</td>
+                        <td>
+                            <div class="btn-group">
+                                <a asp-action="EditTvSeries" asp-route-id="@item.Id" class="btn btn-sm btn-info">Edit</a>
+                                <a asp-action="DeleteTvSeries" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

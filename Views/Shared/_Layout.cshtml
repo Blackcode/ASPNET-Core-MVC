@@ -33,8 +33,14 @@
                     <ul class="navbar-nav">
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-controller="Admin" asp-action="Index">Admin Dashboard</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-light" href="#" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Admin
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="adminDropdown">
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="Index">Movies</a>
+                                    <a class="dropdown-item" asp-controller="Admin" asp-action="TvSeries">TV Series</a>
+                                </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-light" asp-controller="Account" asp-action="Logout">Logout</a>

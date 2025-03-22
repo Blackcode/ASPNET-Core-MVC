@@ -134,5 +134,116 @@ namespace ASPNET_Core_MVC.Controllers
         {
             return _context.Movies.Any(e => e.Id == id);
         }
+
+        // TV Series Management
+        // GET: Admin/TvSeries
+        public async Task<IActionResult> TvSeries()
+        {
+            return View(await _context.TvSeries.ToListAsync());
+        }
+
+        // GET: Admin/CreateTvSeries
+        public IActionResult CreateTvSeries()
+        {
+            return View();
+        }
+
+        // POST: Admin/CreateTvSeries
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateTvSeries([Bind("Title,Description,Creator,Genre,StartYear,EndYear,ImageUrl,IsFeatured")] TvSeries tvSeries)
+        {
+            if (ModelState.IsValid)
+            {
+                tvSeries.DateAdded = DateTime.Now;
+                _context.Add(tvSeries);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(TvSeries));
+            }
+            return View(tvSeries);
+        }
+
+        // GET: Admin/EditTvSeries/5
+        public async Task<IActionResult> EditTvSeries(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tvSeries = await _context.TvSeries.FindAsync(id);
+            if (tvSeries == null)
+            {
+                return NotFound();
+            }
+            return View(tvSeries);
+        }
+
+        // POST: Admin/EditTvSeries/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditTvSeries(int id, [Bind("Id,Title,Description,Creator,Genre,StartYear,EndYear,ImageUrl,IsFeatured,DateAdded")] TvSeries tvSeries)
+        {
+            if (id != tvSeries.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(tvSeries);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!TvSeriesExists(tvSeries.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(TvSeries));
+            }
+            return View(tvSeries);
+        }
+
+        // GET: Admin/DeleteTvSeries/5
+        public async Task<IActionResult> DeleteTvSeries(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tvSeries = await _context.TvSeries
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (tvSeries == null)
+            {
+                return NotFound();
+            }
+
+            return View(tvSeries);
+        }
+
+        // POST: Admin/DeleteTvSeries/5
+        [HttpPost, ActionName("DeleteTvSeries")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteTvSeriesConfirmed(int id)
+        {
+            var tvSeries = await _context.TvSeries.FindAsync(id);
+            _context.TvSeries.Remove(tvSeries);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(TvSeries));
+        }
+
+        private bool TvSeriesExists(int id)
+        {
+            return _context.TvSeries.Any(e => e.Id == id);
+        }
     }
 }
