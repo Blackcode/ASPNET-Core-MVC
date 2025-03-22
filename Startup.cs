@@ -93,10 +93,18 @@ namespace ASPNET_Core_MVC
                     context.Response.StatusCode = 500;
                     context.Response.ContentType = "text/html";
                     
-                    var errorMessage = System.Text.Encoding.UTF8.GetBytes(
-                        $"<html><body><h1>Server Error</h1><p>An error occurred: {ex.Message}</p></body></html>");
+                    string errorMessage;
+                    // In production, don't expose error details
+                    if (env.IsProduction())
+                    {
+                        errorMessage = "<html><body><h1>Server Error</h1><p>An unexpected error occurred. Please try again later.</p></body></html>";
+                    }
+                    else
+                    {
+                        errorMessage = $"<html><body><h1>Server Error</h1><p>An error occurred: {ex.Message}</p><p>Stack trace: {ex.StackTrace}</p></body></html>";
+                    }
                     
-                    await context.Response.Body.WriteAsync(errorMessage, 0, errorMessage.Length);
+                    await context.Response.WriteAsync(errorMessage);
                 }
             });
             

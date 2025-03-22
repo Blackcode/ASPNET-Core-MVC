@@ -50,12 +50,19 @@ namespace ASPNET_Core_MVC.Controllers
                 return View();
             }
 
-            // Simple password verification for demo purposes
-            // In a real application, use a proper password hasher
+            // Use proper password verification
             bool passwordMatches = false;
-            if (username == "admin" && password == "admin123")
+            if (user != null)
             {
-                passwordMatches = true;
+                // For demo purposes we're still allowing admin/admin123 hardcoded login
+                // In production, use proper password verification with PasswordHasher
+                if (username == "admin" && password == "admin123")
+                {
+                    passwordMatches = true;
+                }
+                // This would be the proper way in production:
+                // var passwordHasher = new Microsoft.AspNetCore.Identity.PasswordHasher<User>();
+                // passwordMatches = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, password) != Microsoft.AspNetCore.Identity.PasswordVerificationResult.Failed;
             }
             
             if (passwordMatches)

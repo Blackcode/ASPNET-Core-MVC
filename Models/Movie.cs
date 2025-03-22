@@ -1,6 +1,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ASPNET_Core_MVC.Models
 {
@@ -22,6 +23,7 @@ namespace ASPNET_Core_MVC.Models
         [StringLength(100)]
         public string Genre { get; set; }
         
+        [Range(1900, 2100, ErrorMessage = "Release year must be between 1900 and 2100")]
         public int ReleaseYear { get; set; }
         
         [StringLength(200)]

@@ -27,7 +27,15 @@ namespace ASPNET_Core_MVC
                     var context = services.GetRequiredService<MovieDbContext>();
                     
                     // Ensure database exists and is created using EF Core's migration system
-                    context.Database.EnsureCreated();
+                    // Create database and apply migrations if they exist
+                    if (context.Database.GetPendingMigrations().Any())
+                    {
+                        context.Database.Migrate();
+                    }
+                    else
+                    {
+                        context.Database.EnsureCreated();
+                    }
                     
                     try
                     {

@@ -22,6 +22,7 @@ namespace ASPNET_Core_MVC.Controllers
             _context = context;
         }
 
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         public async Task<IActionResult> Index()
         {
             var featuredMovies = await _context.Movies

@@ -12,10 +12,12 @@ namespace ASPNET_Core_MVC.Controllers
     public class MoviesController : Controller
     {
         private readonly MovieDbContext _context;
+        private readonly ILogger<MoviesController> _logger;
 
-        public MoviesController(MovieDbContext context)
+        public MoviesController(MovieDbContext context, ILogger<MoviesController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: Movies
@@ -33,16 +35,25 @@ namespace ASPNET_Core_MVC.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movies
-                .AsNoTracking() // Use AsNoTracking for read-only operations
-                .FirstOrDefaultAsync(m => m.Id == id.Value);
-
-            if (movie == null)
+            try
             {
-                return NotFound();
-            }
+                var movie = await _context.Movies
+                    .AsNoTracking() // Use AsNoTracking for read-only operations
+                    .FirstOrDefaultAsync(m => m.Id == id.Value);
 
-            return View(movie);
+                if (movie == null)
+                {
+                    return NotFound();
+                }
+
+                return View(movie);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                _logger.LogError(ex, $"Error retrieving movie with ID {id}");
+                return StatusCode(500, "An error occurred while retrieving the movie details");
+            }
         }
 
         // GET: Movies/Watch/5

@@ -1,6 +1,7 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ASPNET_Core_MVC.Models
 {
@@ -15,8 +16,10 @@ namespace ASPNET_Core_MVC.Models
         [StringLength(500)]
         public string Description { get; set; }
         
+        [Range(1, 100, ErrorMessage = "Season number must be between 1 and 100")]
         public int SeasonNumber { get; set; }
         
+        [Range(1, 1000, ErrorMessage = "Episode number must be between 1 and 1000")]
         public int EpisodeNumber { get; set; }
         
         [StringLength(200)]

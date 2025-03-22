@@ -13,10 +13,12 @@ namespace ASPNET_Core_MVC.Controllers
     public class TvSeriesController : Controller
     {
         private readonly MovieDbContext _context;
+        private readonly ILogger<TvSeriesController> _logger;
 
-        public TvSeriesController(MovieDbContext context)
+        public TvSeriesController(MovieDbContext context, ILogger<TvSeriesController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: TvSeries
@@ -33,17 +35,35 @@ namespace ASPNET_Core_MVC.Controllers
                 return NotFound();
             }
 
-            var tvSeries = await _context.TvSeries
-                .Include(t => t.Episodes.OrderBy(e => e.SeasonNumber).ThenBy(e => e.EpisodeNumber))
-                .AsNoTracking()
-                .FirstOrDefaultAsync(m => m.Id == id.Value);
-
-            if (tvSeries == null)
+            try
             {
-                return NotFound();
-            }
+                // First check if the series exists
+                var tvSeries = await _context.TvSeries
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(m => m.Id == id.Value);
 
-            return View(tvSeries);
+                if (tvSeries == null)
+                {
+                    return NotFound();
+                }
+
+                // Then load episodes in a separate query for better performance
+                var episodes = await _context.Episodes
+                    .Where(e => e.TvSeriesId == id.Value)
+                    .OrderBy(e => e.SeasonNumber)
+                    .ThenBy(e => e.EpisodeNumber)
+                    .AsNoTracking()
+                    .ToListAsync();
+                
+                tvSeries.Episodes = episodes;
+
+                return View(tvSeries);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error retrieving TV series with ID {id}");
+                return StatusCode(500, "An error occurred while retrieving TV series details");
+            }
         }
 
         // GET: TvSeries/Watch/5 (Episode ID)
