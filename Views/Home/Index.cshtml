@@ -1,101 +1,115 @@
+
 @{
     ViewData["Title"] = "Home Page";
+    
+    var featuredMovies = ViewData["FeaturedMovies"] as List<ASPNET_Core_MVC.Models.Movie> ?? new List<ASPNET_Core_MVC.Models.Movie>();
+    var recentMovies = ViewData["RecentMovies"] as List<ASPNET_Core_MVC.Models.Movie> ?? new List<ASPNET_Core_MVC.Models.Movie>();
+    var featuredTvSeries = ViewData["FeaturedTvSeries"] as List<ASPNET_Core_MVC.Models.TvSeries> ?? new List<ASPNET_Core_MVC.Models.TvSeries>();
+    var recentTvSeries = ViewData["RecentTvSeries"] as List<ASPNET_Core_MVC.Models.TvSeries> ?? new List<ASPNET_Core_MVC.Models.TvSeries>();
 }
 
 <div class="container">
-    <!-- Featured Movies Carousel -->
-    <div class="row mt-4">
-        <div class="col">
-            <h2>Featured Movies</h2>
-            <div class="featured-carousel">
-                <div class="row">
-                    @foreach (var movie in ViewBag.FeaturedMovies)
-                    {
-                        <div class="col-md-3 mb-4">
-                            <div class="card featured-movie-card">
-                                <a href="@Url.Action("Details", "Movies", new { id = movie.Id })">
-                                    <img src="@movie.ImageUrl" class="card-img-top featured-poster" alt="@movie.Title">
-                                    <div class="card-body">
-                                        <h5 class="card-title">@movie.Title</h5>
-                                        <p class="card-text">@movie.ReleaseYear | @movie.Genre</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Latest Movies -->
-    <div class="row mt-4">
-        <div class="col">
-            <h2>Latest Movies</h2>
-            <div class="row">
-                @foreach (var movie in ViewBag.LatestMovies)
-                {
-                    <div class="col-md-2 mb-4">
-                        <div class="card movie-card">
-                            <a href="@Url.Action("Details", "Movies", new { id = movie.Id })">
-                                <img src="@movie.ImageUrl" class="card-img-top movie-poster" alt="@movie.Title">
-                                <div class="card-body">
-                                    <h5 class="card-title">@movie.Title</h5>
-                                    <p class="card-text">@movie.ReleaseYear</p>
-                                </div>
-                            </a>
+    <h2 class="section-title">Featured Movies</h2>
+    <div class="row">
+        @if (featuredMovies.Any())
+        {
+            @foreach (var movie in featuredMovies)
+            {
+                <div class="col-md-2 mb-4">
+                    <div class="card h-100">
+                        <img src="@(string.IsNullOrEmpty(movie.PosterUrl) ? "/images/default-movie.jpg" : movie.PosterUrl)" class="card-img-top" alt="@movie.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@movie.Title</h5>
+                            <p class="card-text">@movie.Year</p>
+                            <a href="/Movies/Details/@movie.Id" class="btn btn-primary">View Details</a>
                         </div>
                     </div>
-                }
-            </div>
-        </div>
-    </div>
-
-    <!-- Featured TV Series -->
-    <div class="row mt-4">
-        <div class="col">
-            <h2>Featured TV Series</h2>
-            <div class="featured-carousel">
-                <div class="row">
-                    @foreach (var series in ViewBag.FeaturedTvSeries)
-                    {
-                        <div class="col-md-3 mb-4">
-                            <div class="card featured-movie-card">
-                                <a href="@Url.Action("Details", "TvSeries", new { id = series.Id })">
-                                    <img src="@series.ImageUrl" class="card-img-top featured-poster" alt="@series.Title">
-                                    <div class="card-body">
-                                        <h5 class="card-title">@series.Title</h5>
-                                        <p class="card-text">@series.StartYear | @series.Genre</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    }
                 </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <p>No featured movies available.</p>
             </div>
-        </div>
+        }
     </div>
-
-    <!-- Latest TV Series -->
-    <div class="row mt-4">
-        <div class="col">
-            <h2>Latest TV Series</h2>
-            <div class="row">
-                @foreach (var series in ViewBag.LatestTvSeries)
-                {
-                    <div class="col-md-2 mb-4">
-                        <div class="card movie-card">
-                            <a href="@Url.Action("Details", "TvSeries", new { id = series.Id })">
-                                <img src="@series.ImageUrl" class="card-img-top movie-poster" alt="@series.Title">
-                                <div class="card-body">
-                                    <h5 class="card-title">@series.Title</h5>
-                                    <p class="card-text">@series.StartYear</p>
-                                </div>
-                            </a>
+    
+    <h2 class="section-title">Recent Movies</h2>
+    <div class="row">
+        @if (recentMovies.Any())
+        {
+            @foreach (var movie in recentMovies)
+            {
+                <div class="col-md-2 mb-4">
+                    <div class="card h-100">
+                        <img src="@(string.IsNullOrEmpty(movie.PosterUrl) ? "/images/default-movie.jpg" : movie.PosterUrl)" class="card-img-top" alt="@movie.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@movie.Title</h5>
+                            <p class="card-text">@movie.Year</p>
+                            <a href="/Movies/Details/@movie.Id" class="btn btn-primary">View Details</a>
                         </div>
                     </div>
-                }
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <p>No recent movies available.</p>
             </div>
-        </div>
+        }
+    </div>
+    
+    <h2 class="section-title">Featured TV Series</h2>
+    <div class="row">
+        @if (featuredTvSeries.Any())
+        {
+            @foreach (var series in featuredTvSeries)
+            {
+                <div class="col-md-2 mb-4">
+                    <div class="card h-100">
+                        <img src="@(string.IsNullOrEmpty(series.PosterUrl) ? "/images/default-series.jpg" : series.PosterUrl)" class="card-img-top" alt="@series.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@series.Title</h5>
+                            <p class="card-text">@series.Year</p>
+                            <a href="/TvSeries/Details/@series.Id" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <p>No featured TV series available.</p>
+            </div>
+        }
+    </div>
+    
+    <h2 class="section-title">Recent TV Series</h2>
+    <div class="row">
+        @if (recentTvSeries.Any())
+        {
+            @foreach (var series in recentTvSeries)
+            {
+                <div class="col-md-2 mb-4">
+                    <div class="card h-100">
+                        <img src="@(string.IsNullOrEmpty(series.PosterUrl) ? "/images/default-series.jpg" : series.PosterUrl)" class="card-img-top" alt="@series.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@series.Title</h5>
+                            <p class="card-text">@series.Year</p>
+                            <a href="/TvSeries/Details/@series.Id" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <p>No recent TV series available.</p>
+            </div>
+        }
     </div>
 </div>
