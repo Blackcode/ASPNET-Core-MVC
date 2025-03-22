@@ -50,7 +50,8 @@ namespace ASPNET_Core_MVC
                                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                                 Username TEXT NOT NULL,
                                 PasswordHash TEXT NOT NULL,
-                                Role TEXT NOT NULL
+                                Role TEXT NOT NULL,
+                                DateCreated TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
                             );
                         ");
                         
