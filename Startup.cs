@@ -13,6 +13,7 @@ using ASPNET_Core_MVC.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
+using Microsoft.Extensions.Logging;
 
 namespace ASPNET_Core_MVC
 {
@@ -86,9 +87,16 @@ namespace ASPNET_Core_MVC
                 }
                 catch (Exception ex)
                 {
+                    var logger = context.RequestServices.GetRequiredService<ILogger<Startup>>();
+                    logger.LogError(ex, "Unhandled exception occurred");
+                    
                     context.Response.StatusCode = 500;
-                    await context.Response.Body.WriteAsync(
-                        System.Text.Encoding.UTF8.GetBytes($"An error occurred: {ex.Message}"));
+                    context.Response.ContentType = "text/html";
+                    
+                    var errorMessage = System.Text.Encoding.UTF8.GetBytes(
+                        $"<html><body><h1>Server Error</h1><p>An error occurred: {ex.Message}</p></body></html>");
+                    
+                    await context.Response.Body.WriteAsync(errorMessage, 0, errorMessage.Length);
                 }
             });
             

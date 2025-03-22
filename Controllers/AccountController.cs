@@ -50,9 +50,15 @@ namespace ASPNET_Core_MVC.Controllers
                 return View();
             }
 
-            // In a real application, you would properly verify the password hash
-            // For this demo, we're just checking if it's admin/admin123
+            // Simple password verification for demo purposes
+            // In a real application, use a proper password hasher
+            bool passwordMatches = false;
             if (username == "admin" && password == "admin123")
+            {
+                passwordMatches = true;
+            }
+            
+            if (passwordMatches)
             {
                 var claims = new List<Claim>
                 {

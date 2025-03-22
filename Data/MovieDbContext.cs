@@ -41,7 +41,8 @@ namespace ASPNET_Core_MVC.Data
                     ReleaseYear = 2021,
                     ImageUrl = "https://via.placeholder.com/300x450/343a40/ffffff?text=Movie+1",
                     VideoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-                    IsFeatured = true
+                    IsFeatured = true,
+                    DateAdded = DateTime.Now
                 },
                 new Movie
                 {
@@ -52,7 +53,8 @@ namespace ASPNET_Core_MVC.Data
                     Genre = "Comedy",
                     ReleaseYear = 2020,
                     ImageUrl = "https://via.placeholder.com/300x450/1a237e/ffffff?text=Movie+2",
-                    VideoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+                    VideoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+                    DateAdded = DateTime.Now
                 }
             );
             
@@ -68,7 +70,8 @@ namespace ASPNET_Core_MVC.Data
                     StartYear = 2020,
                     EndYear = null, // Still ongoing
                     ImageUrl = "https://via.placeholder.com/300x450/2e7d32/ffffff?text=TV+Series+1",
-                    IsFeatured = true
+                    IsFeatured = true,
+                    DateAdded = DateTime.Now
                 },
                 new TvSeries
                 {
@@ -79,7 +82,8 @@ namespace ASPNET_Core_MVC.Data
                     Genre = "Sci-Fi",
                     StartYear = 2018,
                     EndYear = 2022,
-                    ImageUrl = "https://via.placeholder.com/300x450/c62828/ffffff?text=TV+Series+2"
+                    ImageUrl = "https://via.placeholder.com/300x450/c62828/ffffff?text=TV+Series+2",
+                    DateAdded = DateTime.Now
                 }
             );
             
