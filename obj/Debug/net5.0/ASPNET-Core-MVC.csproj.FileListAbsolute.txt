@@ -151,3 +151,6 @@
 /home/runner/workspace/obj/Debug/net5.0/ref/ASPNET-Core-MVC.dll
 /home/runner/workspace/obj/Debug/net5.0/ASPNET-Core-MVC.pdb
 /home/runner/workspace/obj/Debug/net5.0/ASPNET-Core-MVC.genruntimeconfig.cache
+/home/runner/workspace/obj/Debug/net5.0/Razor/Views/TvSeries/Details.cshtml.g.cs
+/home/runner/workspace/obj/Debug/net5.0/Razor/Views/TvSeries/Index.cshtml.g.cs
+/home/runner/workspace/obj/Debug/net5.0/Razor/Views/TvSeries/Watch.cshtml.g.cs
