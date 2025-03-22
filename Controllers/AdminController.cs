@@ -125,6 +125,11 @@ namespace ASPNET_Core_MVC.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var movie = await _context.Movies.FindAsync(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            
             _context.Movies.Remove(movie);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -153,6 +158,17 @@ namespace ASPNET_Core_MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateTvSeries([Bind("Title,Description,Creator,Genre,StartYear,EndYear,ImageUrl,IsFeatured")] TvSeries tvSeries)
         {
+            // Additional validation for years
+            if (tvSeries.EndYear.HasValue && tvSeries.StartYear > tvSeries.EndYear)
+            {
+                ModelState.AddModelError("EndYear", "End year cannot be earlier than start year");
+            }
+            
+            if (tvSeries.StartYear > DateTime.Now.Year)
+            {
+                ModelState.AddModelError("StartYear", "Start year cannot be in the future");
+            }
+            
             if (ModelState.IsValid)
             {
                 tvSeries.DateAdded = DateTime.Now;
@@ -187,6 +203,17 @@ namespace ASPNET_Core_MVC.Controllers
             if (id != tvSeries.Id)
             {
                 return NotFound();
+            }
+            
+            // Additional validation for years
+            if (tvSeries.EndYear.HasValue && tvSeries.StartYear > tvSeries.EndYear)
+            {
+                ModelState.AddModelError("EndYear", "End year cannot be earlier than start year");
+            }
+            
+            if (tvSeries.StartYear > DateTime.Now.Year)
+            {
+                ModelState.AddModelError("StartYear", "Start year cannot be in the future");
             }
 
             if (ModelState.IsValid)
@@ -236,6 +263,11 @@ namespace ASPNET_Core_MVC.Controllers
         public async Task<IActionResult> DeleteTvSeriesConfirmed(int id)
         {
             var tvSeries = await _context.TvSeries.FindAsync(id);
+            if (tvSeries == null)
+            {
+                return NotFound();
+            }
+            
             _context.TvSeries.Remove(tvSeries);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(TvSeries));
@@ -255,8 +287,8 @@ namespace ASPNET_Core_MVC.Controllers
                 return NotFound();
             }
 
+            // First check if the TV series exists
             var tvSeries = await _context.TvSeries
-                .Include(t => t.Episodes.OrderBy(e => e.SeasonNumber).ThenBy(e => e.EpisodeNumber))
                 .FirstOrDefaultAsync(m => m.Id == id.Value);
 
             if (tvSeries == null)
@@ -264,10 +296,17 @@ namespace ASPNET_Core_MVC.Controllers
                 return NotFound();
             }
 
+            // Then load its episodes (more efficient query)
+            var episodes = await _context.Episodes
+                .Where(e => e.TvSeriesId == id.Value)
+                .OrderBy(e => e.SeasonNumber)
+                .ThenBy(e => e.EpisodeNumber)
+                .ToListAsync();
+
             ViewBag.TvSeriesId = id;
             ViewBag.TvSeriesTitle = tvSeries.Title;
             
-            return View(tvSeries.Episodes.ToList());
+            return View(episodes);
         }
 
         // GET: Admin/CreateEpisode/5 (TV Series ID)
@@ -371,6 +410,11 @@ namespace ASPNET_Core_MVC.Controllers
         public async Task<IActionResult> DeleteEpisodeConfirmed(int id)
         {
             var episode = await _context.Episodes.FindAsync(id);
+            if (episode == null)
+            {
+                return NotFound();
+            }
+            
             int tvSeriesId = episode.TvSeriesId;
             _context.Episodes.Remove(episode);
             await _context.SaveChangesAsync();
