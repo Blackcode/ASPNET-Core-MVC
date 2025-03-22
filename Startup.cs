@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using ASPNET_Core_MVC.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ASPNET_Core_MVC
 {
@@ -23,6 +26,16 @@ namespace ASPNET_Core_MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<MovieDbContext>(options =>
+                options.UseSqlite(Configuration.GetConnectionString("MovieDbContext")));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.LoginPath = "/Account/Login";
+                    options.AccessDeniedPath = "/Account/AccessDenied";
+                });
+
             services.AddControllersWithViews();
         }
 
@@ -44,6 +57,7 @@ namespace ASPNET_Core_MVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

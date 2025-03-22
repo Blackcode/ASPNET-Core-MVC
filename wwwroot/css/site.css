@@ -1,4 +1,5 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
@@ -61,6 +62,7 @@ html {
 body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
+  background-color: #f8f9fa;
 }
 .footer {
   position: absolute;
@@ -68,4 +70,78 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+/* Custom styles for movie streaming site */
+.hero-section {
+  background-color: #343a40;
+  color: white;
+  padding: 3rem 0;
+  margin-bottom: 2rem;
+  border-radius: 5px;
+}
+
+.movie-card {
+  height: 100%;
+  transition: transform 0.3s;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+}
+
+.movie-card img {
+  height: 300px;
+  object-fit: cover;
+}
+
+.featured-movies, .recent-movies {
+  margin-bottom: 2rem;
+}
+
+.featured-movies h2, .recent-movies h2 {
+  margin-bottom: 1.5rem;
+  color: #343a40;
+  border-bottom: 2px solid #1b6ec2;
+  padding-bottom: 0.5rem;
+}
+
+.movie-details {
+  padding: 2rem 0;
+}
+
+.movie-poster {
+  border-radius: 5px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 5px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.video-container .movie-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.watch-page {
+  padding: 2rem 0;
+}
+
+.watch-page h1 {
+  margin-bottom: 1.5rem;
+}
+
+.movie-info {
+  margin-top: 1.5rem;
 }

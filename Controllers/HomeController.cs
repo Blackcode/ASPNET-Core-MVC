@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -6,20 +6,29 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ASPNET_Core_MVC.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ASPNET_Core_MVC.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly MovieDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, MovieDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var featuredMovies = await _context.Movies.Where(m => m.IsFeatured).ToListAsync();
+            var recentMovies = await _context.Movies.OrderByDescending(m => m.DateAdded).Take(6).ToListAsync();
+
+            ViewData["FeaturedMovies"] = featuredMovies;
+            ViewData["RecentMovies"] = recentMovies;
+
             return View();
         }
 
