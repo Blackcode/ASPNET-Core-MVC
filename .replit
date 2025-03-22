@@ -1,3 +1,15 @@
 [[ports]]
 localPort = 8080
 externalPort = 80
+
+[workflows]
+runButton = "Run"
+
+[[workflows.workflow]]
+name = "Run"
+author = 40754884
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "dotnet watch run --urls=http://0.0.0.0:8080"
