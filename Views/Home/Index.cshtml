@@ -1,107 +1,118 @@
+
 @{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="hero-section">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-8">
-                <h1>Welcome to Movie Streaming</h1>
-                <p class="lead">Watch the latest movies and TV series online anytime, anywhere.</p>
-            </div>
-            <div class="col-md-4 d-none d-md-block text-right">
-                <i class="fa fa-film fa-5x"></i>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="container">
-    @if (ViewBag.FeaturedMovies != null && ViewBag.FeaturedMovies.Count > 0)
-    {
-        <div class="featured-movies">
-            <h2>Featured Movies</h2>
-            <div class="row">
-                @foreach (var movie in ViewBag.FeaturedMovies)
+    <!-- Featured Movies Section -->
+    <section class="featured-section">
+        <h2>Featured Movies</h2>
+        <div class="row">
+            @if (ViewData["FeaturedMovies"] != null && ((IEnumerable<ASPNET_Core_MVC.Models.Movie>)ViewData["FeaturedMovies"]).Any())
+            {
+                foreach (var movie in (IEnumerable<ASPNET_Core_MVC.Models.Movie>)ViewData["FeaturedMovies"])
                 {
-                    <div class="col-6 col-md-4 col-lg-3 mb-4">
-                        <div class="card movie-card">
-                            <img src="@movie.ImageUrl" class="card-img-top" alt="@movie.Title">
+                    <div class="col-md-2">
+                        <div class="card mb-4">
+                            <img src="@movie.PosterUrl" class="card-img-top" alt="@movie.Title">
                             <div class="card-body">
                                 <h5 class="card-title">@movie.Title</h5>
-                                <p class="card-text small">@movie.Genre | @movie.ReleaseYear</p>
-                                <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-primary btn-sm">View Details</a>
+                                <a href="/Movies/Details/@movie.Id" class="btn btn-primary">View</a>
                             </div>
                         </div>
                     </div>
                 }
-            </div>
+            }
+            else
+            {
+                <div class="col-12">
+                    <p>No featured movies available.</p>
+                </div>
+            }
         </div>
-    }
+    </section>
 
-    @if (ViewBag.FeaturedTvSeries != null && ViewBag.FeaturedTvSeries.Count > 0)
-    {
-        <div class="featured-movies">
-            <h2>Featured TV Series</h2>
-            <div class="row">
-                @foreach (var series in ViewBag.FeaturedTvSeries)
+    <!-- Recent Movies Section -->
+    <section class="recent-section">
+        <h2>Recent Movies</h2>
+        <div class="row">
+            @if (ViewData["RecentMovies"] != null && ((IEnumerable<ASPNET_Core_MVC.Models.Movie>)ViewData["RecentMovies"]).Any())
+            {
+                foreach (var movie in (IEnumerable<ASPNET_Core_MVC.Models.Movie>)ViewData["RecentMovies"])
                 {
-                    <div class="col-6 col-md-4 col-lg-3 mb-4">
-                        <div class="card movie-card">
-                            <img src="@series.ImageUrl" class="card-img-top" alt="@series.Title">
-                            <div class="card-body">
-                                <h5 class="card-title">@series.Title</h5>
-                                <p class="card-text small">@series.Genre | @series.StartYear@(series.EndYear.HasValue ? $" - {series.EndYear}" : " - Present")</p>
-                                <a asp-controller="TvSeries" asp-action="Details" asp-route-id="@series.Id" class="btn btn-primary btn-sm">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    }
-
-    @if (ViewBag.RecentMovies != null && ViewBag.RecentMovies.Count > 0)
-    {
-        <div class="recent-movies">
-            <h2>Recent Additions</h2>
-            <div class="row">
-                @foreach (var movie in ViewBag.RecentMovies)
-                {
-                    <div class="col-6 col-md-4 col-lg-3 mb-4">
-                        <div class="card movie-card">
-                            <img src="@movie.ImageUrl" class="card-img-top" alt="@movie.Title">
+                    <div class="col-md-2">
+                        <div class="card mb-4">
+                            <img src="@movie.PosterUrl" class="card-img-top" alt="@movie.Title">
                             <div class="card-body">
                                 <h5 class="card-title">@movie.Title</h5>
-                                <p class="card-text small">@movie.Genre | @movie.ReleaseYear</p>
-                                <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id" class="btn btn-primary btn-sm">View Details</a>
+                                <a href="/Movies/Details/@movie.Id" class="btn btn-primary">View</a>
                             </div>
                         </div>
                     </div>
                 }
-            </div>
+            }
+            else
+            {
+                <div class="col-12">
+                    <p>No recent movies available.</p>
+                </div>
+            }
         </div>
-    }
+    </section>
 
-    @if (ViewBag.RecentTvSeries != null && ViewBag.RecentTvSeries.Count > 0)
-    {
-        <div class="recent-movies">
-            <h2>Recently Added TV Series</h2>
-            <div class="row">
-                @foreach (var series in ViewBag.RecentTvSeries)
+    <!-- Featured TV Series Section -->
+    <section class="featured-section">
+        <h2>Featured TV Series</h2>
+        <div class="row">
+            @if (ViewData["FeaturedTvSeries"] != null && ((IEnumerable<ASPNET_Core_MVC.Models.TvSeries>)ViewData["FeaturedTvSeries"]).Any())
+            {
+                foreach (var series in (IEnumerable<ASPNET_Core_MVC.Models.TvSeries>)ViewData["FeaturedTvSeries"])
                 {
-                    <div class="col-6 col-md-4 col-lg-3 mb-4">
-                        <div class="card movie-card">
-                            <img src="@series.ImageUrl" class="card-img-top" alt="@series.Title">
+                    <div class="col-md-2">
+                        <div class="card mb-4">
+                            <img src="@series.PosterUrl" class="card-img-top" alt="@series.Title">
                             <div class="card-body">
                                 <h5 class="card-title">@series.Title</h5>
-                                <p class="card-text small">@series.Genre | @series.StartYear@(series.EndYear.HasValue ? $" - {series.EndYear}" : " - Present")</p>
-                                <a asp-controller="TvSeries" asp-action="Details" asp-route-id="@series.Id" class="btn btn-primary btn-sm">View Details</a>
+                                <a href="/TvSeries/Details/@series.Id" class="btn btn-primary">View</a>
                             </div>
                         </div>
                     </div>
                 }
-            </div>
+            }
+            else
+            {
+                <div class="col-12">
+                    <p>No featured TV series available.</p>
+                </div>
+            }
         </div>
-    }
+    </section>
+
+    <!-- Recent TV Series Section -->
+    <section class="recent-section">
+        <h2>Recent TV Series</h2>
+        <div class="row">
+            @if (ViewData["RecentTvSeries"] != null && ((IEnumerable<ASPNET_Core_MVC.Models.TvSeries>)ViewData["RecentTvSeries"]).Any())
+            {
+                foreach (var series in (IEnumerable<ASPNET_Core_MVC.Models.TvSeries>)ViewData["RecentTvSeries"])
+                {
+                    <div class="col-md-2">
+                        <div class="card mb-4">
+                            <img src="@series.PosterUrl" class="card-img-top" alt="@series.Title">
+                            <div class="card-body">
+                                <h5 class="card-title">@series.Title</h5>
+                                <a href="/TvSeries/Details/@series.Id" class="btn btn-primary">View</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <p>No recent TV series available.</p>
+                </div>
+            }
+        </div>
+    </section>
 </div>
